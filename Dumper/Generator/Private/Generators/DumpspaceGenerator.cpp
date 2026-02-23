@@ -467,7 +467,10 @@ void DumpspaceGenerator::GeneratedStaticOffsets()
 
 	DSGen::addOffset("OFFSET_GOBJECTS", Off::InSDK::ObjArray::GObjects);
 	DSGen::addOffset(Off::InSDK::Name::bIsUsingAppendStringOverToString ? "OFFSET_APPENDSTRING" : "OFFSET_TOSTRING", Off::InSDK::Name::AppendNameToString);
-	DSGen::addOffset("OFFSET_GNAMES", Off::InSDK::NameArray::GNames);
+	
+	if (!Settings::EngineCore::bExcludeFNames)
+		DSGen::addOffset("OFFSET_GNAMES", Off::InSDK::NameArray::GNames);
+	
 	DSGen::addOffset("OFFSET_GWORLD", Off::InSDK::World::GWorld);
 	DSGen::addOffset("OFFSET_PROCESSEVENT", Off::InSDK::ProcessEvent::PEOffset);
 	DSGen::addOffset("INDEX_PROCESSEVENT", Off::InSDK::ProcessEvent::PEIndex);

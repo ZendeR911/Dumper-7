@@ -70,6 +70,21 @@ void FName::Init_Windows(bool bForceGNames)
 {
 #ifdef PLATFORM_WINDOWS
 
+	if (Settings::EngineCore::bExcludeFNames)
+	{
+		ToStr = [](const void* Name) -> std::wstring
+		{
+			const uint32 Number = FName(Name).GetNumber();
+			const int32 CompIdx = FName(Name).GetCompIdx();
+
+			if (Number > 0)
+				return std::format(L"Name_{:X}_{}", CompIdx, Number - 1);
+
+			return std::format(L"Name_{:X}", CompIdx);
+		};
+		return;
+	}
+
 #if defined(_WIN64)
 	constexpr std::array<const char*, 6> PossibleSigs = 
 	{ 
@@ -205,6 +220,21 @@ void FName::Init_Windows(bool bForceGNames)
 
 void FName::Init(int32 OverrideOffset, EOffsetOverrideType OverrideType, bool bIsNamePool, const char* const ModuleName)
 {
+	if (Settings::EngineCore::bExcludeFNames)
+	{
+		ToStr = [](const void* Name) -> std::wstring
+		{
+			const uint32 Number = FName(Name).GetNumber();
+			const int32 CompIdx = FName(Name).GetCompIdx();
+
+			if (Number > 0)
+				return std::format(L"Name_{:X}_{}", CompIdx, Number - 1);
+
+			return std::format(L"Name_{:X}", CompIdx);
+		};
+		return;
+	}
+
 	if (OverrideType == EOffsetOverrideType::GNames)
 	{
 		const bool bInitializedSuccessfully = NameArray::TryInit(OverrideOffset, bIsNamePool, ModuleName);

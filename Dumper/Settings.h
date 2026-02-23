@@ -32,6 +32,9 @@ namespace Settings
 
 		/* Enables support for TEncryptedObjectProperty */
 		constexpr bool bEnableEncryptedObjectPropertySupport = false;
+
+		/* Exclude scanning and dumping of FNames */
+		constexpr bool bExcludeFNames = true;
 	}
 
 	namespace Generator
